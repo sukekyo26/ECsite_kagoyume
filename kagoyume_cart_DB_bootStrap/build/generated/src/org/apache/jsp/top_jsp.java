@@ -59,6 +59,8 @@ public final class top_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n");
       out.write("        <link href=\"css/bootstrap.min.css\" rel=\"stylesheet\">\n");
       out.write("        <link href=\"https://use.fontawesome.com/releases/v5.0.6/css/all.css\" rel=\"stylesheet\">\n");
+      out.write("        <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js\"></script>\n");
+      out.write("        <script src=\"js/bootstrap.min.js\"></script>\n");
       out.write("        <title>かごゆめ</title>\n");
       out.write("    </head>\n");
       out.write("    <body>\n");
@@ -66,7 +68,7 @@ public final class top_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("        <nav class=\"navbar navbar-default\">\n");
       out.write("            <div class=\"container-fluid\">\n");
       out.write("                <div class=\"navbar-header\">\n");
-      out.write("                    <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\".navbar-collapse\">\n");
+      out.write("                    <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\"#navBootstrap\">\n");
       out.write("                        <span class=\"sr-only\">メニュー</span>\n");
       out.write("                        <span class=\"icon-bar\"></span>\n");
       out.write("                        <span class=\"icon-bar\"></span>\n");
@@ -74,7 +76,7 @@ public final class top_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                    </button>\n");
       out.write("                    <a href=\"top.jsp\" class=\"navbar-brand\" style=\"font-size: 150%\">かごゆめ</a>\n");
       out.write("                </div>                \n");
-      out.write("                <div class=\"collapse navbar-collapse\">\n");
+      out.write("                <div class=\"collapse navbar-collapse\" id=\"navBootstrap\">\n");
       out.write("                    ");
 if(udd != null){
       out.write("\n");
@@ -83,7 +85,7 @@ if(udd != null){
       out.print(udd.getName());
       out.write("</a>さん!</p></li> \n");
       out.write("                        <li><a href=\"Cart\"><i class=\"fas fa-shopping-cart\"></i> 買い物かご</a></li>\n");
-      out.write("                        <li><a href=\"Login?set=logout\"><strong><i class=\"fas fa-sign-out-alt\"></i> ログアウト</strong></a></li>\n");
+      out.write("                        <li><a href=\"Login?set=logout\"><strong><i class=\"fas fa-sign-out-alt\"></i> ログアウト</strong></a></li>    \n");
       out.write("                    </ul>\n");
       out.write("                    ");
 }else{
