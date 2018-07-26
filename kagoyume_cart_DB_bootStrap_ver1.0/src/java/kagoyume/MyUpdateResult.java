@@ -54,6 +54,12 @@ public class MyUpdateResult extends HttpServlet {
             ud.setAddressLevel1(adsLv1);//入力済フォーム用
             ud.setAddressLevel2(adsLv2);//入力済フォーム用
             
+            if(!udd.getMail().equals(mail) && UserDataDAO.getInstance().CheckRegisteredUser(ud)){//メールアドレスの重複チェック
+                ud.setMailCheck(false);
+                request.setAttribute("UserInfo", ud);
+                request.getRequestDispatcher("/myupdate.jsp").forward(request, response);
+                return;
+            }
             //if(adsLv1.endsWith("都") | adsLv1.endsWith("道") || adsLv1.endsWith("府") || adsLv1.endsWith("県")){
             //} else {
               //  ud.setAddressCheck(false);

@@ -118,6 +118,7 @@
                             <input type="text" name="address-level2" placeholder="市区以降" value="<%if(ud != null){out.print(ud.getAddressLevel2());}%>" class="form-control" id="address">
                         </div>
                         <div>
+                        <%if(ud != null && !ud.getMailCheck()){%><p style="color: red"><%out.print("＊このメールアドレスは既に登録されています＊");%></p><%}%>
                         <%if(ud != null && !ud.getAddressCheck()){%><p style="color: red"><%out.print("＊住所の値が不正です＊");%></p><%}%>
                         </div>
                         <div class="form-group">
