@@ -113,7 +113,8 @@
                                     <option value="沖縄県" <%if(ud != null && ud.getAddressLevel1().equals("沖縄県")){out.print("selected");}%>>沖縄県</option>
                                 </select>
                                 <input type="text" name="address-level2" placeholder="市区町村" value="<%if(ud != null){out.print(ud.getAddressLevel2());}%>" class="form-control" id="address">
-                                <input type="text" name="address-line1" placeholder="番地以下" value="<%if(ud != null){out.print(ud.getAddressLine1());}%>" class="form-control" id="address">
+                                <input type="text" name="address-line1" placeholder="番地(半角数字、例:1-11-1)" value="<%if(ud != null){out.print(ud.getAddressLine1());}%>" class="form-control" id="address">
+                                <input type="text" name="address-line2" placeholder="アパートマンション名(未記入可)" value="<%if(ud != null){out.print(ud.getAddressLine2());}%>" class="form-control" id="address">
                             </div>
                         </div>
                         <div class="col-sm-offset-2 col-sm-10">

@@ -7,6 +7,8 @@ package kagoyume;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -46,13 +48,22 @@ public class MyUpdateResult extends HttpServlet {
             String mail = request.getParameter("mail");
             String adsLv1 = request.getParameter("address-level1");
             String adsLv2 = request.getParameter("address-level2");
-            
-            
-            ud.setName(user); //UserDataクラスに値を格納
+            String adsLi1 = request.getParameter("address-line1");
+            String adsLi2 = request.getParameter("address-line2");
+            int count = 0;
+            if(!adsLv2.equals("")){
+                count ++;
+            }
+            if(!adsLi1.equals("")){
+                count ++;
+            }
+            ud.setName(user);//UserDataクラスに値を格納
             ud.setPassword(password);
             ud.setMail(mail);
             ud.setAddressLevel1(adsLv1);//入力済フォーム用
             ud.setAddressLevel2(adsLv2);//入力済フォーム用
+            ud.setAddressLine1(adsLi1);
+            ud.setAddressLine2(adsLi2);
             
             if(!udd.getMail().equals(mail) && UserDataDAO.getInstance().CheckRegisteredUser(ud)){//メールアドレスの重複チェック
                 ud.setMailCheck(false);
@@ -60,49 +71,40 @@ public class MyUpdateResult extends HttpServlet {
                 request.getRequestDispatcher("/myupdate.jsp").forward(request, response);
                 return;
             }
-            //if(adsLv1.endsWith("都") | adsLv1.endsWith("道") || adsLv1.endsWith("府") || adsLv1.endsWith("県")){
-            //} else {
-              //  ud.setAddressCheck(false);
-                //request.setAttribute("UserInfo", ud);
-                //request.getRequestDispatcher("/myupdate.jsp").forward(request, response);
-                //return;
-            //}
-            int count = 0;
-            if(adsLv2.contains("市")){
-                count++;
-            }
-            if(adsLv2.contains("区")){
-                count++;
-            }
-            if(adsLv2.contains("町")){
-                count++;
-            }
-            if(adsLv2.contains("村")){
-                count++;
-            }
-            if(count < 2){//市区町村の文字が最低でも2つないとおかしいのでその場合は戻る
+            Pattern p = Pattern.compile("^[0-9]{1,2}-[0-9]{1,2}-[0-9]{1,2}$");//正規表現で番地のチェック
+            Matcher m = p.matcher(adsLi1);
+            if(count == 0 || count == 2 && m.find() && adsLv2.contains("市") || adsLv2.contains("区")){//住所不正チェック(市区は必ず含む)
+            } else {
                 ud.setAddressCheck(false);
                 request.setAttribute("UserInfo", ud);
                 request.getRequestDispatcher("/myupdate.jsp").forward(request, response);
                 return;
             }
             UserDataDTO updateudd = new UserDataDTO();//フォームで入力された更新情報を格納する(空欄も)
-            updateudd.setAddress(adsLv1 + adsLv2);//住所を結合
-            udd.setAddress(adsLv1 + adsLv2);//住所を結合
-            
-            
+            if(count != 0){
+                if(adsLi2.equals("")){//住所を結合
+                    ud.setAddress(adsLv1 + adsLv2 + adsLi1);//住所を結合
+                    updateudd.setAddress(adsLv1 + adsLv2 + adsLi1);//住所を結合
+                    udd.setAddress(adsLv1 + adsLv2 + adsLi1);//sessionを更新
+                }else{
+                    ud.setAddress(adsLv1 + adsLv2 + adsLi1 + adsLi2);//住所を結合
+                    updateudd.setAddress(adsLv1 + adsLv2 + adsLi1 + adsLi2);//住所を結合
+                    udd.setAddress(adsLv1 + adsLv2 + adsLi1 + adsLi2);//sessionを更新
+                }
+            } else {
+                updateudd.setAddress("");//住所が未記入の場合、空白を挿入
+            }
             updateudd.setUserId(udd.getUserID());
-            updateudd.setName(request.getParameter("user"));
-
-            if(!request.getParameter("user").equals("")){
+            updateudd.setName(user);
+            if(!user.equals("")){
                 udd.setName(request.getParameter("user"));
             }//空欄でない時loginUserDataの値も更新
-            updateudd.setPassword(request.getParameter("password"));
-            if(!request.getParameter("password").equals("")){
+            updateudd.setPassword(password);
+            if(!password.equals("")){
                 udd.setPassword(request.getParameter("password"));
             }//空欄でない時loginUserDataの値も更新
-            updateudd.setMail(request.getParameter("mail"));
-            if(!request.getParameter("mail").equals("")){
+            updateudd.setMail(mail);
+            if(!mail.equals("")){
                 udd.setMail(request.getParameter("mail"));
             }//空欄でない時loginUserDataの値も更新
             

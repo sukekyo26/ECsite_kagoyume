@@ -127,7 +127,7 @@ public class UserData implements Serializable{
     public String getAddressLine2(){
         return addressLine2;
     }
-    public void setAddressLeveL1byUDD(UserDataDTO udd){
+    public void setAddressLeveL1byUDD(UserDataDTO udd){//都道府県を切り取る
         String ad = udd.getAddress();
         if(ad.contains("鹿児島県") || ad.contains("和歌山県") || ad.contains("神奈川県")){
             this.addressLevel1 = ad.substring(0, 4);
@@ -135,12 +135,64 @@ public class UserData implements Serializable{
             this.addressLevel1 = ad.substring(0, 3);
         }
     }
-    public void setAddressLevel23byUDD(UserDataDTO udd){
+    public void setAddressLevel2byUDD(UserDataDTO udd){//東京都立川市柴崎町4-44-44の場合、立川市柴崎町の部分を切り取る
         String ad = udd.getAddress();
+        int number = 20;//初期値20(住所に20文字もある地域はないと思うのでとりあえず20にセット)
+        for(int count = 1; count < 10; count++){
+            String co = Integer.toString(count);
+            if(number > ad.indexOf(co) && ad.indexOf(co) > 0){
+                number = ad.indexOf(co);//数字が初めて来る位置をセット
+            }
+        }
         if(ad.contains("鹿児島県") || ad.contains("和歌山県") || ad.contains("神奈川県")){
-            this.addressLevel2 = ad.substring(4);
+            this.addressLevel2 = ad.substring(4, number);
         } else {
-            this.addressLevel2 = ad.substring(3);
+            this.addressLevel2 = ad.substring(3, number);
+        }
+    }
+    public void setAddressLine1byUDD(UserDataDTO udd){//東京都立川市柴崎町4-44-44の場合、4-44-44の部分を切り取る
+        String ad = udd.getAddress();
+        int number = 20;//初期値20
+        for(int count = 1; count < 10; count++){
+            String co = Integer.toString(count);
+            if(number > ad.indexOf(co) && ad.indexOf(co) > 0){
+                number = ad.indexOf(co);//数字が初めて来る位置をセット
+            }
+        }
+        int firstHyhn = ad.indexOf("-");
+        int secondHyhn = ad.indexOf("-", firstHyhn + 1);
+        boolean exist = false;
+        for(int num = 0; num < 10; num++){
+            String nu = Integer.toString(num);
+            if(ad.indexOf(nu, secondHyhn + 2) != -1){
+                this.addressLine1 = ad.substring(number, secondHyhn + 3);
+                exist = true;
+            } 
+            if(!exist){
+                this.addressLine1 = ad.substring(number, secondHyhn + 2);
+            }
+        }
+    }
+    public void setAddressLine2byUDD(UserDataDTO udd){//アパートマンション名の部分があれば切り取る
+        String ad = udd.getAddress();
+        int firstHyhn = ad.indexOf("-");
+        int secondHyhn = ad.indexOf("-", firstHyhn + 1);
+        boolean exist = false;
+        for(int num = 0; num < 10; num++){
+            String nu = Integer.toString(num);
+            if(ad.indexOf(nu, secondHyhn + 2) != -1){
+                exist = true;
+                if(ad.length() - 1 == ad.indexOf(nu, secondHyhn + 2)){
+                    break;
+                } else {
+                    this.addressLine2 = ad.substring(secondHyhn + 3);
+                }
+            }
+        }
+        if(!exist){
+            if(ad.length() - 1 != secondHyhn + 1){
+                this.addressLine2 = ad.substring(secondHyhn + 2);
+            }
         }
     }
     //UsreData用のデータをUserDataDTO用のデータに変換

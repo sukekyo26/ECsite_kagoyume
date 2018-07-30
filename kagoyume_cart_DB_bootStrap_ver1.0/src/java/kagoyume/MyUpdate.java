@@ -39,7 +39,9 @@ public class MyUpdate extends HttpServlet {
             ud.setPassword(udd.getPassword());
             ud.setMail(udd.getMail());
             ud.setAddressLeveL1byUDD(udd);
-            ud.setAddressLevel23byUDD(udd);
+            ud.setAddressLevel2byUDD(udd);
+            ud.setAddressLine1byUDD(udd);
+            ud.setAddressLine2byUDD(udd);
             request.setAttribute("UserInfo", ud);
             request.getRequestDispatcher("/myupdate.jsp").forward(request, response);
         }

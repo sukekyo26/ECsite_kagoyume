@@ -50,7 +50,7 @@
         <div class="container">
             <div class="panel panel-success">
                 <div class="panel-body">
-                    <h1 style="font-size: 200%">更新したいデータを記入してください(住所以外の未記入の欄は更新されません)</h1>
+                    <h1 style="font-size: 200%">更新したいデータを記入してください(未記入の欄は更新されません)</h1>
                     <form action="MyUpdateResult" method="post">
                         <div class="form-group">
                             <label for="user">ユーザー名：</label>
@@ -65,7 +65,7 @@
                             <input type="email" name="mail" class="form-control" id="mail" value="<%if(ud != null){out.print(ud.getMail());}%>">
                         </div>
                         <div class="form-group">
-                            <label for="address">住所(必須)：</label>
+                            <label for="address">住所：</label>
                             <select class="form-control" name="address-level1" id="address">
                                 <option value="北海道" <%if(ud.getAddressLevel1().equals("北海道")){out.print("selected");}%>>北海道</option>
                                 <option value="青森県" <%if(ud.getAddressLevel1().equals("青森県")){out.print("selected");}%>>青森県</option>
@@ -115,7 +115,9 @@
                                 <option value="鹿児島県" <%if(ud.getAddressLevel1().equals("鹿児島県")){out.print("selected");}%>>鹿児島県</option>
                                 <option value="沖縄県" <%if(ud.getAddressLevel1().equals("沖縄県")){out.print("selected");}%>>沖縄県</option>
                             </select>
-                            <input type="text" name="address-level2" placeholder="市区以降" value="<%if(ud != null){out.print(ud.getAddressLevel2());}%>" class="form-control" id="address">
+                            <input type="text" name="address-level2" placeholder="市区町村" value="<%if(ud != null){out.print(ud.getAddressLevel2());}%>" class="form-control" id="address">
+                            <input type="text" name="address-line1" placeholder="番地(半角数字、例:1-11-1)" value="<%if(ud != null){out.print(ud.getAddressLine1());}%>" class="form-control" id="address">
+                            <input type="text" name="address-line2" placeholder="アパートマンション名(未記入可)" value="<%if(ud != null && ud.getAddressLine2() != null){out.print(ud.getAddressLine2());}%>" class="form-control" id="address">
                         </div>
                         <div>
                         <%if(ud != null && !ud.getMailCheck()){%><p style="color: red"><%out.print("＊このメールアドレスは既に登録されています＊");%></p><%}%>
