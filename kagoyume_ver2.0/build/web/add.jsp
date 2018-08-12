@@ -39,7 +39,8 @@
                         <li><a href="Login?set=logout"><strong><i class="fas fa-sign-out-alt"></i> ログアウト</strong></a></li>
                     </ul>
                     <%}else{%>
-                    <ul class="nav navbar-nav navbar-right">    
+                    <ul class="nav navbar-nav navbar-right">   
+                        <li><a href="Cart"><i class="fas fa-shopping-cart"></i><%if(uci != null && uci.getAllItemCount() > 0){%><span class="label label-warning"><%=uci.getAllItemCount()%></span><%}%> 買い物かご</a></li>
                         <li><a href="Login?previous=add"><strong><i class="fas fa-sign-in-alt"></i> ログイン</strong></a></li>
                     </ul>
                     <%}%>

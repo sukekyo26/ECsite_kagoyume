@@ -43,7 +43,7 @@
                             <li><a href="Login?set=logout"><strong><i class="fas fa-sign-out-alt"></i> ログアウト</strong></a></li>
                         <%}else{%>
                             <li><a href="Cart"><i class="fas fa-shopping-cart"></i><%if(ci != null && ci.getAllItemCount() > 0){%><span class="label label-warning"><%=ci.getAllItemCount()%></span><%}else if(uci != null && uci.getAllItemCount() > 0){%><span class="label label-warning"><%=uci.getAllItemCount()%></span><%}%> 買い物かご</a></li>
-                            <li><a href="Login?previous=Cart"><strong><i class="fas fa-sign-in-alt"></i> ログイン</strong></a></li>
+                            <li><a href="Login?previous=cart"><strong><i class="fas fa-sign-in-alt"></i> ログイン</strong></a></li>
                         <%}%>
                     </ul>
                 </div>
