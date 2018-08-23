@@ -303,14 +303,15 @@ public class SearchYahooApi {
                 //JSONの読み込み書き込みが出来るObjectMapperクラスのインスタンスを生成
                 JsonNode jn = mapper.readTree(result);
                 //ObjectMapperクラスのreadTreeメソッド(JsonNodeインスタンスのセットを使用して表現されたツリーとしてJSONコンテンツを逆シリアル化するメソッド)
-                
-                String name = jn.get("ResultSet").get("0").get("Result").get("0").get("Name").asText();
-                String thumnail = jn.get("ResultSet").get("0").get("Result").get("0").get("Image").get("Small").asText();
-                int price = jn.get("ResultSet").get("0").get("Result").get("0").get("Price").get("_value").asInt();
-                sbd.setItemName(name);
-                sbd.setThumnail(thumnail);
-                sbd.setItemPrice(price);
-                //商品名、サムネイル画像、価格
+                if(jn.get("ResultSet").get("totalResultsReturned").asInt() != 0){
+                    String name = jn.get("ResultSet").get("0").get("Result").get("0").get("Name").asText();
+                    String thumnail = jn.get("ResultSet").get("0").get("Result").get("0").get("Image").get("Small").asText();
+                    int price = jn.get("ResultSet").get("0").get("Result").get("0").get("Price").get("_value").asInt();
+                    sbd.setItemName(name);
+                    sbd.setThumnail(thumnail);
+                    sbd.setItemPrice(price);
+                    //商品名、サムネイル画像、価格
+                }
             }
             return sbd;
         } catch (Exception e){
