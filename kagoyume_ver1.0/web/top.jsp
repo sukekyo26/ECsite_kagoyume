@@ -55,11 +55,6 @@
         
         <div class="container">
             <div class="row">
-            <h1>
-                "あなたが望む商品を購入可能です。"<br>
-                "購入代金は一切かかりません。"<br>
-                "夢のショッピングサイトへようこそ。"<br>
-            </h1>
             <div class="panel panel-success">
                 <div class="panel-body panel-success">
                 <h1 class="text-center">商品検索</h1>
